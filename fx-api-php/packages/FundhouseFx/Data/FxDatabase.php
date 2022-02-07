@@ -51,8 +51,12 @@ class FxDatabase extends SQLite3 {
         return $currency;
     }
 
-    function get_spot_rates(int $base_currency_id, int $quote_currency_id){
-        $query_text = file_get_contents(__DIR__ . '/queries/get_spot_rates.sql');
+    function get_spot_rates(int $base_currency_id, int $quote_currency_id, bool $last ){
+        if ($last) {
+            $query_text = file_get_contents(__DIR__ . '/queries/get_last_spot_rates.sql');
+        } else {
+            $query_text = file_get_contents(__DIR__ . '/queries/get_spot_rates.sql');
+        }
         $statement = $this->prepare($query_text);
 
         $statement->bindValue(':base_ccy_id', $base_currency_id);
@@ -75,6 +79,28 @@ class FxDatabase extends SQLite3 {
 
         return $spots;
     }
+
+    function get_currency_sets(){
+        $query_text = file_get_contents(__DIR__ . '/queries/get_currency_sets.sql');
+        $statement = $this->prepare($query_text);
+
+        $results = $statement->execute();
+        $base_currency = array();
+        $currencies = array();
+        
+        while($row = $results->fetchArray())
+        {
+            if (!in_array($row['base_currency_id'], $base_currency)) {
+                array_push($base_currency, $row['base_currency_id']);
+            }
+            array_push($currencies, "{$row['base_currency_id']}.{$row['quote_currency_id']}" );
+        }
+
+        $statement->close();
+
+        return array($base_currency, $currencies);
+    }
+
     
     function __destruct()
     {

@@ -1,0 +1,1 @@
+SELECT DISTINCT base_currency_id, quote_currency_id FROM spot_rates;

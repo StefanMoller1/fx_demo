@@ -9,6 +9,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && apt-get update \
     && apt-get install zip unzip
 
+RUN apt-get install -y sqlite3 libsqlite3-dev
+
 WORKDIR /app
 
 RUN php /usr/local/bin/composer update \

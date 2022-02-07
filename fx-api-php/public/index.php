@@ -45,7 +45,7 @@ $app->addErrorMiddleware(true, true, true);
  * we registered with the Container instance earlier on.
  * 
  * See https://www.slimframework.com/docs/v4/objects/routing.html#container-resolution for more information.
- * 
+*/
 
 /* 
     Route: [GET] /currencies

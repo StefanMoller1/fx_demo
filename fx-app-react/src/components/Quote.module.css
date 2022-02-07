@@ -1,0 +1,9 @@
+.fx_quote {
+  padding: 16px 0;
+  font-size: 2em;
+  text-align: center;
+}
+
+.fx_quote_amount {
+  font-weight: bold;
+}
